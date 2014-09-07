@@ -33,7 +33,7 @@ class SocialfeedServiceProvider extends ServiceProvider {
             return $this->app->make('Dunderfelt\Socialfeed\Socialfeed');
         });
 
-        $this->app->bind('ContentRepository', function()
+        $this->app->bind('Dunderfelt\Socialfeed\Interfaces\ContentRepository', function()
         {
             return $this->app->make('Dunderfelt\Socialfeed\Repositories\EloquentContentRepository');
         });

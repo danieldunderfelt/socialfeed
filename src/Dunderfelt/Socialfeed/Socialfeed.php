@@ -1,6 +1,6 @@
 <?php namespace Dunderfelt\Socialfeed;
 
-use Dunderfelt\Socialfeed\Repositories\ContentRepository;
+use Dunderfelt\Socialfeed\Interfaces\ContentRepository;
 
 class Socialfeed {
 
@@ -17,5 +17,15 @@ class Socialfeed {
     public function next()
     {
         return "next";
+    }
+
+    private function decideNext()
+    {
+
+    }
+
+    public function update()
+    {
+
     }
 } 

@@ -1,5 +1,7 @@
 <?php namespace Dunderfelt\Socialfeed\Repositories;
 
+use Dunderfelt\Socialfeed\Interfaces\ContentRepository;
+
 class EloquentContentRepository implements ContentRepository {
 
     /**
@@ -14,11 +16,17 @@ class EloquentContentRepository implements ContentRepository {
 
     public function getNew()
     {
-
+        return "new";
     }
 
     public function getOld()
     {
 
     }
+
+    public function markAsShown($contentId)
+    {
+
+    }
+
 } 
