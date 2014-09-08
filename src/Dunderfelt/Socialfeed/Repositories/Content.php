@@ -7,4 +7,5 @@ class Content extends \Eloquent {
 
     protected $table = 'social_feed_content';
     protected $guarded = ['id'];
+
 }

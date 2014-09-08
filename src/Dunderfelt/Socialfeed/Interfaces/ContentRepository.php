@@ -2,6 +2,7 @@
 
 interface ContentRepository {
     public function getNew();
-    public function getOld();
+    public function getRandom();
     public function markAsShown($contentId);
+    public function save($data);
 }

@@ -9,7 +9,10 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "4.2.*"
+        "illuminate/support": "4.2.*",
+        "guzzlehttp/guzzle": "4.*",
+        "instaphp/instaphp": "dev-master",
+        "guzzlehttp/oauth-subscriber": "0.1.*"
     },
     "autoload": {
         "classmap": [
