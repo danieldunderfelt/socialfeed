@@ -12,7 +12,7 @@
         "illuminate/support": "4.2.*",
         "guzzlehttp/guzzle": "4.*",
         "instaphp/instaphp": "dev-master",
-        "guzzlehttp/oauth-subscriber": "0.1.*"
+        "guzzlehttp/oauth-subscriber": "*"
     },
     "autoload": {
         "classmap": [

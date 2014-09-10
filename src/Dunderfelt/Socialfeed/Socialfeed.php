@@ -2,6 +2,7 @@
 
 use Dunderfelt\Socialfeed\Interfaces\ContentRepository;
 use Dunderfelt\Socialfeed\Networks\Twitter;
+use Illuminate\Support\Facades\Config;
 
 class Socialfeed {
 
@@ -25,7 +26,7 @@ class Socialfeed {
      */
     public function next()
     {
-        $this->update();
+        $this->twitter->update();
         return $this->decideNext();
     }
 
@@ -36,7 +37,7 @@ class Socialfeed {
     {
         $items = $this->content->getNew();
         if($items === null) $this->content->getRandom();
-        return $items;
+        return $items->content_text;
     }
 
     /**

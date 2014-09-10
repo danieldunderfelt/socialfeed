@@ -27,20 +27,27 @@ abstract class SocialNetwork {
     protected function saveItems($items = null)
     {
         if(!$items) {
-            return null;
+            return false;
         }
 
-        $saved = [];
+        $count = 0;
 
         foreach($items as $item) {
             $this->content->save($item);
+            $count++;
         }
 
-        return $saved;
+        return $count;
     }
 
     protected function processTags($tags)
     {
-        return true;
+        $hashString = "";
+
+        foreach($tags as $tag) {
+            $hashString .= $tag['text'] . "+";
+        }
+
+        return $hashString;
     }
 }
