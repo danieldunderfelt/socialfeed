@@ -15,8 +15,8 @@ class Socialfeed {
 
     public function __construct(ContentRepository $content, Twitter $twitter)
     {
-        $this->content = $content;
         $this->twitter = $twitter;
+        $this->content = $content;
     }
 
     /**
@@ -24,7 +24,6 @@ class Socialfeed {
      */
     public function next()
     {
-        $this->twitter->update();
         return $this->decideNext();
     }
 
@@ -34,8 +33,8 @@ class Socialfeed {
     private function decideNext()
     {
         $items = $this->content->getNew();
-        if($items === null) $this->content->getRandom();
-        return $items->content_text;
+        if($items->isEmpty()) $items[] = $this->content->getRandom();
+        return $items;
     }
 
     /**
