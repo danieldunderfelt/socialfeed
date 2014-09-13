@@ -12,4 +12,5 @@ class SocialContentItem {
     public $hashtags = "";
     public $approved = 0;
     public $media_url = "";
-} 
+    public $content_type = "";
+}

@@ -23,6 +23,7 @@ class CreateSocialFeedContentTable extends Migration {
             $table->text('hashtags')->nullable();
             $table->integer('approved')->default(0);
             $table->string('media_url')->nullable();
+            $table->string('content_type')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

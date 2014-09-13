@@ -1,22 +1,21 @@
 <?php namespace Dunderfelt\Socialfeed\Repositories;
 
-use Dunderfelt\Socialfeed\Interfaces\ContentRepository;
 
 class EloquentContentRepository implements ContentRepository {
 
     /**
      * @var Content
      */
-    public $content;
-    /**
-     * @var SocialContentItem
-     */
-    private $socialContentItem;
+    private $db;
 
-    public function __construct(Content $content, SocialContentItem $socialContentItem)
+    public function __construct(Content $db)
     {
-        $this->content = $content;
-        $this->socialContentItem = $socialContentItem;
+        $this->db = $db;
+    }
+
+    public function test()
+    {
+        return "test";
     }
 
     /**
@@ -24,7 +23,17 @@ class EloquentContentRepository implements ContentRepository {
      */
     public function getNew()
     {
-        return $this->content->first();
+        return $this->db->first();
+    }
+
+    /**
+     * Content ID of newest item of type.
+     * @param string $type
+     * @return int
+     */
+    public function getLastItemTimestamp($type = "twitter")
+    {
+        return 0;
     }
 
     public function getRandom()
@@ -37,9 +46,9 @@ class EloquentContentRepository implements ContentRepository {
 
     }
 
-    public function save($data)
+    public function saveItem($data)
     {
-        $object = $this->content->firstOrCreate( (array) $data );
+        $this->db->firstOrCreate( (array) $data );
     }
 
 } 

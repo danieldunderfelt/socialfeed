@@ -1,6 +1,7 @@
 <?php namespace Dunderfelt\Socialfeed;
 
 use Illuminate\Support\ServiceProvider;
+use Dunderfelt\Socialfeed\Repositories\EloquentContentRepository;
 
 class SocialfeedServiceProvider extends ServiceProvider {
 
@@ -33,7 +34,7 @@ class SocialfeedServiceProvider extends ServiceProvider {
             return $this->app->make('Dunderfelt\Socialfeed\Socialfeed');
         });
 
-        $this->app->bind('Dunderfelt\Socialfeed\Interfaces\ContentRepository', function()
+        $this->app->bind('Dunderfelt\Socialfeed\Repositories\ContentRepository', function()
         {
             return $this->app->make('Dunderfelt\Socialfeed\Repositories\EloquentContentRepository');
         });

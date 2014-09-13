@@ -2,7 +2,8 @@
 namespace Dunderfelt\Socialfeed\Interfaces;
 
 interface SocialNetworkInterface {
-    public function getLastItemTimestamp();
+    public function update();
     public function getNewItems($latestTimestamp);
+    public function saveItems($items);
     public function apiRequest($latestTimestamp);
 }

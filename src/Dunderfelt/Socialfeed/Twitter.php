@@ -1,39 +1,36 @@
-<?php namespace Dunderfelt\Socialfeed\Networks;
+<?php namespace Dunderfelt\Socialfeed;
 
 
-use Carbon\Carbon;
-use Dunderfelt\Socialfeed\Interfaces\ContentRepository;
 use Dunderfelt\Socialfeed\Interfaces\SocialNetworkInterface;
+use Dunderfelt\Socialfeed\Repositories\ContentRepository;
 use Dunderfelt\Socialfeed\Repositories\SocialContentItem;
 use GuzzleHttp\Client;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
-use Illuminate\Support\Facades\Config;
 
-class Twitter extends SocialNetwork implements SocialNetworkInterface {
+class Twitter implements SocialNetworkInterface {
 
-    /**
-     * Type of social network. Ie. Twitter, Instagram aso.
-     * (Is "aso" even used as an abbreviation?)
-     * @var string
-     */
-    protected $type = "twitter";
     /**
      * @var
      */
     private $socialContentItem;
 
-    public function __construct(SocialContentItem $socialContentItem)
+    public function __construct(SocialContentItem $socialContentItem, ContentRepository $content)
     {
         $this->socialContentItem = $socialContentItem;
+        $this->content = $content;
     }
 
     /**
-     * Content ID of newest item of type.
+     * Updates storage with new items from the service.
      * @return int
      */
-    public function getLastItemTimestamp()
+    public function update()
     {
-        return 0;
+        return $this->saveItems(
+            $this->getNewItems(
+                $this->content->getLastItemTimestamp()
+            )
+        );
     }
 
     /**
@@ -44,6 +41,22 @@ class Twitter extends SocialNetwork implements SocialNetworkInterface {
     public function getNewItems($latestTimestamp)
     {
         return $this->processData( $this->apiRequest($latestTimestamp) );
+    }
+
+    public function saveItems($items = null)
+    {
+        if($items === null || empty($items)) {
+            return 0;
+        }
+
+        $count = 0;
+
+        foreach($items as $item) {
+            $this->content->saveItem($item);
+            $count++;
+        }
+
+        return $count;
     }
 
     private function processData($data)
@@ -64,12 +77,12 @@ class Twitter extends SocialNetwork implements SocialNetworkInterface {
     public function apiRequest($latestTimestamp)
     {
         $client = new Client(['base_url' => 'https://api.twitter.com', 'defaults' => ['auth' => 'oauth']]);
-        $oauth = new Oauth1(Config::get('socialfeed::api.twitter'));
+        $oauth = new Oauth1(\Config::get('socialfeed::api.twitter'));
         $client->getEmitter()->attach($oauth);
 
-        $hashtags = implode(' ', array_map(function($hashtag) {
+        $hashtags = implode(' OR ', array_map(function($hashtag) {
             return "#" . $hashtag;
-        }, Config::get('socialfeed::hashtags')));
+        }, \Config::get('socialfeed::hashtags')));
 
         $res = $client->get('1.1/search/tweets.json', [
             'query' => [
@@ -87,20 +100,32 @@ class Twitter extends SocialNetwork implements SocialNetworkInterface {
     {
         $item = new $this->socialContentItem;
         $item->content_id = $tweet['id_str'];
-        $item->content_created = Carbon::createFromTimestamp($tweet['created_at']);
+        $item->content_created = strtotime($tweet['created_at']);
         $item->content_text = $tweet["text"];
         $item->content_creator = $tweet["user"]["screen_name"];
         $item->content_creator_name = $tweet["user"]["name"];
         $item->shown = 0;
-        $item->hashtags = $tweet["entities"]["hashtags"];
+        $item->hashtags = $this->processTags($tweet["entities"]["hashtags"]);
         $item->approved = 0;
-        $item->media_url = $this->findMedia($tweet["entities"]["media"]);
+        $item->media_url = $this->findMedia($tweet["entities"]);
+        $item->content_type = "twitter";
 
         return $item;
     }
 
-    private function findMedia($media)
+    private function processTags($tags)
     {
-        return !empty($media[0]["media_url"]) ? $media[0]["media_url"] : false;
+        $hashString = "";
+
+        foreach($tags as $tag) {
+            $hashString .= $tag['text'] . "+";
+        }
+
+        return $hashString;
+    }
+
+    private function findMedia($entities)
+    {
+        return isset($entities['media']) ? $entities['media'][0]["media_url"] : null;
     }
 } 

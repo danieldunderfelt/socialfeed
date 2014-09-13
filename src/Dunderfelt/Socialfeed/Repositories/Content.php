@@ -6,6 +6,6 @@ class Content extends \Eloquent {
     use SoftDeletingTrait;
 
     protected $table = 'social_feed_content';
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
 }

@@ -1,8 +1,6 @@
 <?php namespace Dunderfelt\Socialfeed;
 
-use Dunderfelt\Socialfeed\Interfaces\ContentRepository;
-use Dunderfelt\Socialfeed\Networks\Twitter;
-use Illuminate\Support\Facades\Config;
+use Dunderfelt\Socialfeed\Repositories\ContentRepository;
 
 class Socialfeed {
 

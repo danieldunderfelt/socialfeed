@@ -1,17 +1,9 @@
 <?php namespace Dunderfelt\Socialfeed\Networks;
 
 
-use Dunderfelt\Socialfeed\Interfaces\ContentRepository;
 use Dunderfelt\Socialfeed\Interfaces\SocialNetworkInterface;
 
 class Instagram extends SocialNetwork implements SocialNetworkInterface {
-
-    /**
-     * Type of social network. Ie. Twitter, Instagram aso.
-     * (Is "aso" even used as an abbreviation?)
-     * @var string
-     */
-    protected $type = "instagram";
 
     /**
      * Content ID of newest item of type.
@@ -46,7 +38,7 @@ class Instagram extends SocialNetwork implements SocialNetworkInterface {
         return $items;
     }
 
-    public function apiRequest()
+    public function apiRequest($latestTimestamp)
     {
 
     }
