@@ -28,7 +28,7 @@ class Twitter implements SocialNetworkInterface {
     {
         return $this->saveItems(
             $this->getNewItems(
-                $this->content->getLastItemTimestamp()
+                $this->content->getLastItemTimestamp("twitter", "content_id")
             )
         );
     }

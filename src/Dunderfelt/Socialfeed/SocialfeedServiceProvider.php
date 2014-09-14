@@ -20,6 +20,14 @@ class SocialfeedServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('dunderfelt/socialfeed');
+
+        \Route::get('update', function() {
+            return \App::make('Dunderfelt\Socialfeed\NetworksManager')->update();
+        });
+
+        \App::resolving('Dunderfelt\Socialfeed\NetworksManager', function($networksManager) {
+            $networksManager->loadNetworks();
+        });
 	}
 
 	/**
@@ -38,6 +46,8 @@ class SocialfeedServiceProvider extends ServiceProvider {
         {
             return $this->app->make('Dunderfelt\Socialfeed\Repositories\EloquentContentRepository');
         });
+
+        $this->app->bind('twitter', 'Dunderfelt\Socialfeed\Twitter');
 	}
 
 	/**

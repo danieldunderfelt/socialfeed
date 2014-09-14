@@ -8,14 +8,15 @@ class Socialfeed {
      * @var ContentRepository
      */
     private $content;
-    /**
-     * @var Twitter
-     */
-    private $twitter;
 
-    public function __construct(ContentRepository $content, Twitter $twitter)
+    /**
+     * @var NetworksManager
+     */
+    private $networks;
+
+    public function __construct(ContentRepository $content, NetworksManager $networks)
     {
-        $this->twitter = $twitter;
+        $this->networks = $networks;
         $this->content = $content;
     }
 
@@ -24,7 +25,9 @@ class Socialfeed {
      */
     public function next()
     {
-        return $this->decideNext();
+        $nextItems = $this->decideNext();
+        $this->markBatchAsShown($nextItems);
+        return $nextItems;
     }
 
     /**
@@ -37,12 +40,21 @@ class Socialfeed {
         return $items;
     }
 
+    private function markBatchAsShown($items)
+    {
+        if(count($items) > 0) {
+            foreach($items as $item) {
+                $this->content->markAsShown($item->content_id);
+            }
+        }
+    }
+
     /**
      * Updates the networks with newest items from the API.
      * @return bool
      */
     public function update()
     {
-        return $this->twitter->update();
+        return $this->networks->update();
     }
 } 
