@@ -10,9 +10,16 @@ use GuzzleHttp\Subscriber\Oauth\Oauth1;
 class Twitter implements SocialNetworkInterface {
 
     /**
+     * key/value object for uniform item properties
      * @var
      */
     private $socialContentItem;
+
+    /**
+     * data repository
+     * @var
+     */
+    private $content;
 
     public function __construct(SocialContentItem $socialContentItem, ContentRepository $content)
     {

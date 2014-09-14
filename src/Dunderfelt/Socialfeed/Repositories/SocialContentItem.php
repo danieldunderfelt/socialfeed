@@ -11,6 +11,6 @@ class SocialContentItem {
     public $shown = 0;
     public $hashtags = "";
     public $approved = 0;
-    public $media_url = "";
+    public $media_url = null;
     public $content_type = "";
 }

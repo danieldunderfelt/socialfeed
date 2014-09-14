@@ -48,6 +48,7 @@ class SocialfeedServiceProvider extends ServiceProvider {
         });
 
         $this->app->bind('twitter', 'Dunderfelt\Socialfeed\Twitter');
+        $this->app->bind('instagram', 'Dunderfelt\Socialfeed\Instagram');
 	}
 
 	/**
