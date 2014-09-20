@@ -1,8 +1,8 @@
-<?php namespace Dunderfelt\Socialfeed;
+<?php namespace Dunderfelt\Socialfeed\Networks;
 
 
 use Dunderfelt\Socialfeed\Interfaces\SocialNetworkInterface;
-use Dunderfelt\Socialfeed\Repositories\ContentRepository;
+use Dunderfelt\Socialfeed\Interfaces\ContentRepository;
 use Dunderfelt\Socialfeed\Repositories\SocialContentItem;
 use Instaphp\Instaphp;
 

@@ -1,0 +1,6 @@
+suites:
+  socialfeed_suite:
+    namespace: Dunderfelt\Socialfeed
+    src_path: src
+    spec_path: spec
+    spec_prefix: spec

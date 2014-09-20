@@ -14,6 +14,9 @@
         "instaphp/instaphp": "dev-master",
         "guzzlehttp/oauth-subscriber": "*"
     },
+    "require-dev": {
+        "phpspec/phpspec": "2.*"
+    },
     "autoload": {
         "classmap": [
             "src/migrations"

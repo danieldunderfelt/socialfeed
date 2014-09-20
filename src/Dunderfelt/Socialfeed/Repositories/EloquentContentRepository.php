@@ -2,6 +2,7 @@
 
 
 use Instantiator\Exception\InvalidArgumentException;
+use Dunderfelt\Socialfeed\Interfaces\ContentRepository;
 
 class EloquentContentRepository implements ContentRepository {
 

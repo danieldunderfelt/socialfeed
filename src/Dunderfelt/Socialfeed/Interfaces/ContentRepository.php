@@ -1,4 +1,4 @@
-<?php namespace Dunderfelt\Socialfeed\Repositories;
+<?php namespace Dunderfelt\Socialfeed\Interfaces;
 
 interface ContentRepository {
     public function getNew();

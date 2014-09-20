@@ -42,13 +42,13 @@ class SocialfeedServiceProvider extends ServiceProvider {
             return $this->app->make('Dunderfelt\Socialfeed\Socialfeed');
         });
 
-        $this->app->bind('Dunderfelt\Socialfeed\Repositories\ContentRepository', function()
+        $this->app->bind('Dunderfelt\Socialfeed\Interfaces\ContentRepository', function()
         {
             return $this->app->make('Dunderfelt\Socialfeed\Repositories\EloquentContentRepository');
         });
 
-        $this->app->bind('twitter', 'Dunderfelt\Socialfeed\Twitter');
-        $this->app->bind('instagram', 'Dunderfelt\Socialfeed\Instagram');
+        $this->app->bind('twitter', 'Dunderfelt\Socialfeed\Networks\Twitter');
+        $this->app->bind('instagram', 'Dunderfelt\Socialfeed\Networks\Instagram');
 	}
 
 	/**

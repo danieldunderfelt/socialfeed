@@ -1,18 +1,18 @@
 <?php namespace Dunderfelt\Socialfeed;
 
-use Dunderfelt\Socialfeed\Repositories\ContentRepository;
+use Dunderfelt\Socialfeed\Interfaces\ContentRepository;
 
 class Socialfeed {
 
     /**
      * @var ContentRepository
      */
-    private $content;
+    public $content;
 
     /**
      * @var NetworksManager
      */
-    private $networks;
+    protected $networks;
 
     public function __construct(ContentRepository $content, NetworksManager $networks)
     {
@@ -26,27 +26,7 @@ class Socialfeed {
     public function next()
     {
         $nextItems = $this->decideNext();
-        $this->markBatchAsShown($nextItems);
         return $nextItems;
-    }
-
-    /**
-     * @return array
-     */
-    private function decideNext()
-    {
-        $items = $this->content->getNew();
-        if($items->isEmpty()) $items[] = $this->content->getRandom();
-        return $items;
-    }
-
-    private function markBatchAsShown($items)
-    {
-        if(count($items) > 0) {
-            foreach($items as $item) {
-                $this->content->markAsShown($item->content_id);
-            }
-        }
     }
 
     /**
@@ -56,5 +36,26 @@ class Socialfeed {
     public function update()
     {
         return $this->networks->update();
+    }
+
+    /**
+     * @return array
+     */
+    private  function decideNext()
+    {
+        $items = $this->content->getNew();
+        if($items === null || $items->isEmpty()) $items[] = $this->content->getRandom();
+        return $this->markBatchAsShown($items);
+    }
+
+    private function markBatchAsShown($items)
+    {
+        if(count($items) > 0 && $items !== null) {
+            foreach($items as $item) {
+                $this->content->markAsShown($item->content_id);
+            }
+        }
+
+        return $items;
     }
 } 
